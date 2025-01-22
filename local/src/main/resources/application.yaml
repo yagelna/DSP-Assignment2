@@ -1,0 +1,7 @@
+aws:
+  numberOfInstances: 1
+  instanceType: "m4.large"
+  bucketName: "assignment2-emr"
+  jarsPath: "jars"
+  logsPath: "logs"
+
