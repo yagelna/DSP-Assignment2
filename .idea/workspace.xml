@@ -5,35 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="464e251e-d82e-40f5-8427-733d944bc56b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/top-n/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/top-n/src/main/java/bgu/ds/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/top-n/src/main/java/bgu/ds/TopN.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculate-npmi/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/calculate-npmi/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculate-npmi/src/main/java/bgu/ds/CalculateNpmi.java" beforeDir="false" afterPath="$PROJECT_DIR$/calculate-npmi/src/main/java/bgu/ds/CalculateNpmi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/bgu/ds/common/mapreduce/BigramKeyWritableComparable.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/bgu/ds/common/mapreduce/BigramKeyWritableComparable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/bgu/ds/common/mapreduce/TaggedValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/bgu/ds/common/mapreduce/TaggedValue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/count-N-cw1w2/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/count-N-cw1w2/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/count-N-cw1w2/src/main/java/bgu/ds/CountNCw1w2.java" beforeDir="false" afterPath="$PROJECT_DIR$/count-N-cw1w2/src/main/java/bgu/ds/CountNCw1w2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/count-cw1/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/count-cw1/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/count-cw1/src/main/java/bgu/ds/CountCw1.java" beforeDir="false" afterPath="$PROJECT_DIR$/count-cw1/src/main/java/bgu/ds/CountCw1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/count-cw2/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/count-cw2/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/count-cw2/src/main/java/bgu/ds/CountCw2.java" beforeDir="false" afterPath="$PROJECT_DIR$/count-cw2/src/main/java/bgu/ds/CountCw2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/filter-npmi/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/filter-npmi/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/filter-npmi/src/main/java/bgu/ds/FilterNpmi.java" beforeDir="false" afterPath="$PROJECT_DIR$/filter-npmi/src/main/java/bgu/ds/FilterNpmi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/local/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/filter-npmi/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/filter-npmi/src/main/java/bgu/ds/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/local/src/main/java/bgu/ds/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local/src/main/java/bgu/ds/config/LocalAWSConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/local/src/main/java/bgu/ds/config/LocalAWSConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/local/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sort-npmi/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sort-npmi/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sort-npmi/src/main/java/bgu/ds/DecadeNpmiWritableComparable.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/bgu/ds/common/mapreduce/DecadeNpmiWritableComparable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sort-npmi/src/main/java/bgu/ds/SortNpmi.java" beforeDir="false" afterPath="$PROJECT_DIR$/sort-npmi/src/main/java/bgu/ds/SortNpmi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/word-count/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/word-count/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/top-n/src/main/java/bgu/ds/TopN.java" beforeDir="false" afterPath="$PROJECT_DIR$/top-n/src/main/java/bgu/ds/TopN.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +119,7 @@
       <option name="presentableId" value="Default" />
       <updated>1709804767237</updated>
       <workItem from="1709804768494" duration="10913000" />
-      <workItem from="1709826435555" duration="58807000" />
+      <workItem from="1709826435555" duration="60971000" />
     </task>
     <servers />
   </component>

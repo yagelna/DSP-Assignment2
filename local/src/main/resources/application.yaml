@@ -8,6 +8,7 @@ aws:
   stopWordsPath: "input/heb-stopwords.txt"
   defaultMinNpmi: 0.5
   defaultRelativeMinNpmi: 0.2
+  defaultThresholdNpmi: 0.99999
   topNpmi: 10
 
 

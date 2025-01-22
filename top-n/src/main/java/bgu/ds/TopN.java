@@ -21,23 +21,33 @@ import java.util.TreeMap;
 
 public class TopN {
 
-    public static class ReducerClass extends Reducer<BigramKeyWritableComparable, DoubleWritable, BigramKeyWritableComparable, DoubleWritable> {
+    public static class MapperClass extends Mapper<BigramKeyWritableComparable, DoubleWritable, DecadeNpmiWritableComparable, BigramKeyWritableComparable> {
+
+        @Override
+        public void map(BigramKeyWritableComparable key, DoubleWritable value, Context context) throws IOException,  InterruptedException {
+            context.write(new DecadeNpmiWritableComparable(key.getDecade(), value.get() * -1), key);
+        }
+    }
+
+    public static class ReducerClass extends Reducer<DecadeNpmiWritableComparable, BigramKeyWritableComparable, BigramKeyWritableComparable, DoubleWritable> {
         private Map<Integer, Integer> decadesMap = new HashMap<>();
 
         @Override
-        public void reduce(BigramKeyWritableComparable key, Iterable<DoubleWritable> values, Context context) throws IOException, InterruptedException {
+        public void reduce(DecadeNpmiWritableComparable key, Iterable<BigramKeyWritableComparable> values, Context context) throws IOException, InterruptedException {
             decadesMap.putIfAbsent(key.getDecade(), 0);
             int count = decadesMap.get(key.getDecade());
-            if (count < context.getConfiguration().getInt("top.number", 10)) {
-                context.write(key, values.iterator().next());
-                decadesMap.put(key.getDecade(), count + 1);
+            for (BigramKeyWritableComparable value : values) {
+                if (count < context.getConfiguration().getInt("top.number", 10)) {
+                    context.write(value, new DoubleWritable(key.getNpmi() * -1));
+                    decadesMap.put(key.getDecade(), count + 1);
+                }
             }
         }
     }
 
-    public static class PartitionerClass extends Partitioner<BigramKeyWritableComparable, DoubleWritable> {
+    public static class PartitionerClass extends Partitioner<DecadeNpmiWritableComparable, BigramKeyWritableComparable> {
         @Override
-        public int getPartition(BigramKeyWritableComparable key, DoubleWritable value, int numPartitions) {
+        public int getPartition(DecadeNpmiWritableComparable key, BigramKeyWritableComparable value, int numPartitions) {
             return key.getDecade() % numPartitions;
         }
     }
@@ -50,9 +60,10 @@ public class TopN {
         Job job = Job.getInstance(conf, "Top N NPMI");
         job.setJarByClass(TopN.class);
         job.setPartitionerClass(PartitionerClass.class);
+        job.setMapperClass(MapperClass.class);
         job.setReducerClass(ReducerClass.class);
-        job.setMapOutputKeyClass(BigramKeyWritableComparable.class);
-        job.setMapOutputValueClass(DoubleWritable.class);
+        job.setMapOutputKeyClass(DecadeNpmiWritableComparable.class);
+        job.setMapOutputValueClass(BigramKeyWritableComparable.class);
         job.setOutputKeyClass(BigramKeyWritableComparable.class);
         job.setOutputValueClass(DoubleWritable.class);
         job.setInputFormatClass(SequenceFileInputFormat.class);

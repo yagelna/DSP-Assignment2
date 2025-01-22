@@ -22,6 +22,7 @@ public class Main {
 
         double minNpmi = args.length > 0 ? Integer.parseInt(args[0]) : config.defaultMinNpmi();
         double relativeMinNpmi = args.length > 1 ? Integer.parseInt(args[1]) : config.defaultRelativeMinNpmi();
+        double thresholdNpmi = args.length > 2 ? Integer.parseInt(args[2]) : config.defaultThresholdNpmi();
 
         String dateSuffix = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
 
@@ -85,7 +86,7 @@ public class Main {
                 .jar(String.format("s3://%s/%s/filter-npmi-1.0.jar", config.bucketName(), config.jarsPath()))
                 .args(String.format("s3n://assignment2-emr/output/calculate-npmi/%s", dateSuffix),
                         String.format("s3n://assignment2-emr/output/filter-npmi/%s", dateSuffix),
-                        Double.toString(minNpmi), Double.toString(relativeMinNpmi))
+                        Double.toString(minNpmi), Double.toString(relativeMinNpmi), Double.toString(thresholdNpmi))
                 .build();
 
         StepConfig stepConfig5 = StepConfig.builder()

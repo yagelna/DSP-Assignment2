@@ -9,8 +9,9 @@ public class Main {
         Path output = new Path(args[1]);
         double minNpmi = Double.parseDouble(args[2]);
         double relativeMinNpmi = Double.parseDouble(args[3]);
+        double thresholdNpmi = Double.parseDouble(args[4]);
         try {
-            wordCount.start(input, output, minNpmi, relativeMinNpmi);
+            wordCount.start(input, output, minNpmi, relativeMinNpmi, thresholdNpmi);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

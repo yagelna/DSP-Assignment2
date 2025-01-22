@@ -44,11 +44,13 @@ public class FilterNpmi {
         private double decadeNpmiSum = 0;
         private double minPmi;
         private double relativeMinPmi;
+        private double thresholdNpmi;
 
         @Override
         public void setup(Context context) {
             minPmi = Double.parseDouble(context.getConfiguration().get("minPmi", "1.0"));
             relativeMinPmi = Double.parseDouble(context.getConfiguration().get("relativeMinPmi", "1.0"));
+            thresholdNpmi = Double.parseDouble(context.getConfiguration().get("thresholdNpmi", "0.99999"));
         }
 
         @Override
@@ -59,7 +61,7 @@ public class FilterNpmi {
                 }
             } else {
                 double npmi = values.iterator().next().get();
-                if (npmi < 1 && (npmi >= minPmi || npmi >= relativeMinPmi * decadeNpmiSum)) {
+                if (npmi <  thresholdNpmi && (npmi >= minPmi || npmi >= relativeMinPmi * decadeNpmiSum)) {
                     context.write(key, new DoubleWritable(npmi));
                 }
             }
@@ -73,11 +75,12 @@ public class FilterNpmi {
         }
     }
 
-    public void start(Path input, Path output, double minPmi, double relativeMinPmi) throws Exception{
+    public void start(Path input, Path output, double minPmi, double relativeMinPmi, double thresholdNpmi) throws Exception{
         System.out.println("[DEBUG] STEP 5 started!");
         Configuration conf = new Configuration();
         conf.set("minPmi", Double.toString(minPmi));
         conf.set("relativeMinPmi", Double.toString(relativeMinPmi));
+        conf.set("thresholdNpmi", Double.toString(thresholdNpmi));
 
         Job job = Job.getInstance(conf, "Filter NPMI");
         job.setJarByClass(FilterNpmi.class);
