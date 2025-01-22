@@ -48,7 +48,7 @@ public class CountNCw1w2 {
                 return;
             }
 
-            int decade = (Integer.parseInt(tokens[1]) / 10) * 10;
+            int decade = (Integer.parseInt(tokens[1]) / 10);
             LongWritable count = new LongWritable(Integer.parseInt(tokens[2]));
 
             context.write(new BigramKeyWritableComparable(decade), count);
