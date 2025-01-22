@@ -11,6 +11,7 @@ public interface LocalAWSConfig {
     double defaultMinNpmi();
     double defaultRelativeMinNpmi();
     double defaultThresholdNpmi();
+    double defaultSampleRate();
     int topNpmi();
     boolean useCombiner();
     long maxSplitSize();

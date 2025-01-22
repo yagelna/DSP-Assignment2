@@ -6,6 +6,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.emr.EmrClient;
 import software.amazon.awssdk.services.emr.model.*;
 
+import java.io.DataInput;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,9 +21,10 @@ public class Main {
         System.out.println("list cluster");
         System.out.println(emr.listClusters());
 
-        double minNpmi = args.length > 0 ? Integer.parseInt(args[0]) : config.defaultMinNpmi();
-        double relativeMinNpmi = args.length > 1 ? Integer.parseInt(args[1]) : config.defaultRelativeMinNpmi();
-        double thresholdNpmi = args.length > 2 ? Integer.parseInt(args[2]) : config.defaultThresholdNpmi();
+        double minNpmi = args.length > 0 ? Double.parseDouble(args[0]) : config.defaultMinNpmi();
+        double relativeMinNpmi = args.length > 1 ? Double.parseDouble(args[1]) : config.defaultRelativeMinNpmi();
+        double thresholdNpmi = args.length > 2 ? Double.parseDouble(args[2]) : config.defaultThresholdNpmi();
+        double sampleRate = args.length > 3 ? Double.parseDouble(args[3]) : config.defaultSampleRate();
 
         String dateSuffix = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
 
@@ -32,7 +34,7 @@ public class Main {
                 .args(config.inputCorpusPath(),
                         String.format("s3n://assignment2-emr/output/count-N-cw1w2/%s", dateSuffix),
                         Boolean.toString(config.useCombiner()), Long.toString(config.maxSplitSize()),
-                        "assignment2-emr", config.stopWordsPath())
+                        "assignment2-emr", config.stopWordsPath(), Double.toString(sampleRate))
                 .build();
 
         StepConfig stepConfig1 = StepConfig.builder()

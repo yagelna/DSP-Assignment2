@@ -9,6 +9,7 @@ aws:
   defaultMinNpmi: 0.5
   defaultRelativeMinNpmi: 0.2
   defaultThresholdNpmi: 0.99999
+  defaultSampleRate: 1.0
   topNpmi: 10
   useCombiner: true
   maxSplitSize: 0

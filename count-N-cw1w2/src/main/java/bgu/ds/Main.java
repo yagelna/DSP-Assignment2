@@ -11,8 +11,9 @@ public class Main {
         long maxSplitSize = Long.parseLong(args[3]);
         String stopWordsBucket = args[4];
         String stopWordsKey = args[5];
+        double sampleRate = Double.parseDouble(args[6]);
         try {
-            wordCount.start(input, output, useCombiner, maxSplitSize, stopWordsBucket, stopWordsKey);
+            wordCount.start(input, output, useCombiner, maxSplitSize, stopWordsBucket, stopWordsKey, sampleRate);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -5,24 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="464e251e-d82e-40f5-8427-733d944bc56b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Top10.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculate-npmi/src/main/java/bgu/ds/CalculateNpmi.java" beforeDir="false" afterPath="$PROJECT_DIR$/calculate-npmi/src/main/java/bgu/ds/CalculateNpmi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculate-npmi/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/calculate-npmi/src/main/java/bgu/ds/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/count-N-cw1w2/src/main/java/bgu/ds/CountNCw1w2.java" beforeDir="false" afterPath="$PROJECT_DIR$/count-N-cw1w2/src/main/java/bgu/ds/CountNCw1w2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/count-N-cw1w2/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/count-N-cw1w2/src/main/java/bgu/ds/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/count-cw1/src/main/java/bgu/ds/CountCw1.java" beforeDir="false" afterPath="$PROJECT_DIR$/count-cw1/src/main/java/bgu/ds/CountCw1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/count-cw1/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/count-cw1/src/main/java/bgu/ds/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/count-cw2/src/main/java/bgu/ds/CountCw2.java" beforeDir="false" afterPath="$PROJECT_DIR$/count-cw2/src/main/java/bgu/ds/CountCw2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/count-cw2/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/count-cw2/src/main/java/bgu/ds/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/filter-npmi/src/main/java/bgu/ds/FilterNpmi.java" beforeDir="false" afterPath="$PROJECT_DIR$/filter-npmi/src/main/java/bgu/ds/FilterNpmi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/filter-npmi/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/filter-npmi/src/main/java/bgu/ds/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/local/src/main/java/bgu/ds/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local/src/main/java/bgu/ds/config/LocalAWSConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/local/src/main/java/bgu/ds/config/LocalAWSConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/local/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sort-npmi/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/sort-npmi/src/main/java/bgu/ds/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sort-npmi/src/main/java/bgu/ds/SortNpmi.java" beforeDir="false" afterPath="$PROJECT_DIR$/sort-npmi/src/main/java/bgu/ds/SortNpmi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/top-n/src/main/java/bgu/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/top-n/src/main/java/bgu/ds/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/top-n/src/main/java/bgu/ds/TopN.java" beforeDir="false" afterPath="$PROJECT_DIR$/top-n/src/main/java/bgu/ds/TopN.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +46,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "/Users/ido/workspace/DS/assignment2/assignment2/top-n/src/main/java/bgu/ds",
+    "last_opened_file_path": "/Users/ido/workspace/DS/assignment2/assignment2",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -65,11 +56,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/top-n/src/main/java/bgu/ds" />
       <recent name="$PROJECT_DIR$/sort-npmi/src/main/java/bgu/ds" />
       <recent name="$PROJECT_DIR$/filter-npmi/src/main/java/bgu/ds" />
       <recent name="$PROJECT_DIR$/calculate-npmi/src/main/java/bgu/ds" />
-      <recent name="$PROJECT_DIR$/count-cw2/src/main/java/bgu/ds" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/word-count/src/main/java/bgu/ds" />
@@ -83,7 +74,7 @@
       <recent name="config" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.run local">
+  <component name="RunManager" selected="Maven.assignment2 [clean,install]">
     <configuration name="run local" type="JarApplication">
       <option name="JAR_PATH" value="$PROJECT_DIR$/local/target/local-1.0.jar" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -130,7 +121,8 @@
       <option name="presentableId" value="Default" />
       <updated>1709804767237</updated>
       <workItem from="1709804768494" duration="10913000" />
-      <workItem from="1709826435555" duration="66666000" />
+      <workItem from="1709826435555" duration="76112000" />
+      <workItem from="1711365015595" duration="4936000" />
     </task>
     <servers />
   </component>

@@ -15,7 +15,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
-import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -26,6 +25,7 @@ public class CountNCw1w2 {
 
     public static class MapperClass extends Mapper<LongWritable, Text, BigramKeyWritableComparable, LongWritable> {
         private Set<String> stopWords = new HashSet<>();
+        private double SAMPLE_RATE = 1.0;
 
         @Override
         public void setup(Context context) {
@@ -35,10 +35,16 @@ public class CountNCw1w2 {
                     context.getConfiguration().get("stop_words.key"));
             System.out.println("[DEBUG] Stop words: " + new String(stopWords));
             Collections.addAll(this.stopWords, new String(stopWords).split("\n"));
+            SAMPLE_RATE = Double.parseDouble(context.getConfiguration().get("sample_rate", "1.0"));
         }
 
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+
+            if (Math.random() > SAMPLE_RATE) {
+                return;
+            }
+
             String[] tokens = value.toString().split("\t");
 
             Text bigrams = new Text(tokens[0]);
@@ -85,7 +91,8 @@ public class CountNCw1w2 {
         }
     }
 
-    public void start(Path input, Path output, boolean useCombiner, long maxSplitSize, String StopWordsBucket, String StopWordsKey) throws Exception{
+    public void start(Path input, Path output, boolean useCombiner, long maxSplitSize, String StopWordsBucket,
+                      String StopWordsKey, double sample_rate) throws Exception{
         System.out.println("[DEBUG] STEP 1 started!");
 
         Configuration conf = new Configuration();
@@ -93,6 +100,7 @@ public class CountNCw1w2 {
             conf.setLong("mapred.max.split.size", maxSplitSize);
         conf.set("stop_words.bucket", StopWordsBucket);
         conf.set("stop_words.key", StopWordsKey);
+        conf.set("sample_rate", Double.toString(sample_rate));
 
         Job job = Job.getInstance(conf, "Count N and C(w1,w2)");
         job.setJarByClass(CountNCw1w2.class);
