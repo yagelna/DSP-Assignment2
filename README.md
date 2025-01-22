@@ -1,4 +1,7 @@
-# Distributed System Programming Assignment 2
+## Sarcasm Detection System using AWS - Distributed System Programming Assignment 2
+A distributed system designed to analyze Amazon reviews, perform sentiment analysis, and detect sarcasm. The system utilizes AWS services such as S3, EC2, and SQS to process reviews at scale. Features include worker and manager instances to distribute tasks, HTML visualization of results, and integration of sentiment and named entity recognition using Stanford CoreNLP. The project focuses on scalability, fault tolerance, and efficient resource utilization.
+
+---
 
 ### How to run the program:
 1. Set the working directory to the root of the project.
