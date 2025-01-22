@@ -7,11 +7,12 @@ public class Main {
         CountNCw1w2 wordCount = new CountNCw1w2();
         Path input = new Path(args[0]);
         Path output = new Path(args[1]);
-        String stopWordsBucket = args[2];
-        String stopWordsKey = args[3];
-
+        boolean useCombiner = Boolean.parseBoolean(args[2]);
+        long maxSplitSize = Long.parseLong(args[3]);
+        String stopWordsBucket = args[4];
+        String stopWordsKey = args[5];
         try {
-            wordCount.start(input, output, stopWordsBucket, stopWordsKey);
+            wordCount.start(input, output, useCombiner, maxSplitSize, stopWordsBucket, stopWordsKey);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -75,9 +75,11 @@ public class FilterNpmi {
         }
     }
 
-    public void start(Path input, Path output, double minPmi, double relativeMinPmi, double thresholdNpmi) throws Exception{
+    public void start(Path input, Path output, boolean useCombiner, long maxSplitSize, double minPmi, double relativeMinPmi, double thresholdNpmi) throws Exception{
         System.out.println("[DEBUG] STEP 5 started!");
         Configuration conf = new Configuration();
+        if (maxSplitSize > 0)
+            conf.setLong("mapred.max.split.size", maxSplitSize);
         conf.set("minPmi", Double.toString(minPmi));
         conf.set("relativeMinPmi", Double.toString(relativeMinPmi));
         conf.set("thresholdNpmi", Double.toString(thresholdNpmi));
@@ -86,7 +88,8 @@ public class FilterNpmi {
         job.setJarByClass(FilterNpmi.class);
         job.setMapperClass(MapperClass.class);
         job.setPartitionerClass(PartitionerClass.class);
-        job.setCombinerClass(CombinerClass.class);
+        if (useCombiner)
+            job.setCombinerClass(CombinerClass.class);
         job.setReducerClass(ReducerClass.class);
         job.setMapOutputKeyClass(BigramKeyWritableComparable.class);
         job.setMapOutputValueClass(DoubleWritable.class);

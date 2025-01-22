@@ -48,7 +48,7 @@ public class CountNCw1w2 {
                 return;
             }
 
-            int decade = Integer.parseInt(tokens[1]) / 10;
+            int decade = (Integer.parseInt(tokens[1]) / 10) * 10;
             LongWritable count = new LongWritable(Integer.parseInt(tokens[2]));
 
             context.write(new BigramKeyWritableComparable(decade), count);
@@ -85,10 +85,12 @@ public class CountNCw1w2 {
         }
     }
 
-    public void start(Path input, Path output, String StopWordsBucket, String StopWordsKey) throws Exception{
+    public void start(Path input, Path output, boolean useCombiner, long maxSplitSize, String StopWordsBucket, String StopWordsKey) throws Exception{
         System.out.println("[DEBUG] STEP 1 started!");
 
         Configuration conf = new Configuration();
+        if (maxSplitSize > 0)
+            conf.setLong("mapred.max.split.size", maxSplitSize);
         conf.set("stop_words.bucket", StopWordsBucket);
         conf.set("stop_words.key", StopWordsKey);
 
@@ -96,7 +98,8 @@ public class CountNCw1w2 {
         job.setJarByClass(CountNCw1w2.class);
         job.setMapperClass(MapperClass.class);
         job.setPartitionerClass(PartitionerClass.class);
-        job.setCombinerClass(CombinerClass.class);
+        if (useCombiner)
+            job.setCombinerClass(CombinerClass.class);
         job.setReducerClass(ReducerClass.class);
         job.setMapOutputKeyClass(BigramKeyWritableComparable.class);
         job.setMapOutputValueClass(LongWritable.class);

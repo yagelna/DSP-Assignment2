@@ -12,4 +12,6 @@ public interface LocalAWSConfig {
     double defaultRelativeMinNpmi();
     double defaultThresholdNpmi();
     int topNpmi();
+    boolean useCombiner();
+    long maxSplitSize();
 }

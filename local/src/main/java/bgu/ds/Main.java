@@ -31,6 +31,7 @@ public class Main {
                 .jar(String.format("s3://%s/%s/count-N-cw1w2-1.0.jar", config.bucketName(), config.jarsPath()))
                 .args(config.inputCorpusPath(),
                         String.format("s3n://assignment2-emr/output/count-N-cw1w2/%s", dateSuffix),
+                        Boolean.toString(config.useCombiner()), Long.toString(config.maxSplitSize()),
                         "assignment2-emr", config.stopWordsPath())
                 .build();
 
@@ -44,7 +45,8 @@ public class Main {
         HadoopJarStepConfig step2 = HadoopJarStepConfig.builder()
                 .jar(String.format("s3://%s/%s/count-cw1-1.0.jar", config.bucketName(), config.jarsPath()))
                 .args(String.format("s3n://assignment2-emr/output/count-N-cw1w2/%s", dateSuffix),
-                        String.format("s3n://assignment2-emr/output/count-cw1/%s", dateSuffix))
+                        String.format("s3n://assignment2-emr/output/count-cw1/%s", dateSuffix),
+                        Boolean.toString(config.useCombiner()), Long.toString(config.maxSplitSize()))
                 .build();
 
         StepConfig stepConfig2 = StepConfig.builder()
@@ -57,7 +59,8 @@ public class Main {
         HadoopJarStepConfig step3 = HadoopJarStepConfig.builder()
                 .jar(String.format("s3://%s/%s/count-cw2-1.0.jar", config.bucketName(), config.jarsPath()))
                 .args(String.format("s3n://assignment2-emr/output/count-N-cw1w2/%s", dateSuffix),
-                        String.format("s3n://assignment2-emr/output/count-cw2/%s", dateSuffix))
+                        String.format("s3n://assignment2-emr/output/count-cw2/%s", dateSuffix),
+                        Boolean.toString(config.useCombiner()), Long.toString(config.maxSplitSize()))
                 .build();
 
         StepConfig stepConfig3 = StepConfig.builder()
@@ -72,7 +75,8 @@ public class Main {
                 .args(String.format("s3n://assignment2-emr/output/count-N-cw1w2/%s", dateSuffix),
                         String.format("s3n://assignment2-emr/output/count-cw1/%s", dateSuffix),
                         String.format("s3n://assignment2-emr/output/count-cw2/%s", dateSuffix),
-                        String.format("s3n://assignment2-emr/output/calculate-npmi/%s", dateSuffix))
+                        String.format("s3n://assignment2-emr/output/calculate-npmi/%s", dateSuffix),
+                        Long.toString(config.maxSplitSize()))
                 .build();
 
         StepConfig stepConfig4 = StepConfig.builder()
@@ -86,6 +90,7 @@ public class Main {
                 .jar(String.format("s3://%s/%s/filter-npmi-1.0.jar", config.bucketName(), config.jarsPath()))
                 .args(String.format("s3n://assignment2-emr/output/calculate-npmi/%s", dateSuffix),
                         String.format("s3n://assignment2-emr/output/filter-npmi/%s", dateSuffix),
+                        Boolean.toString(config.useCombiner()), Long.toString(config.maxSplitSize()),
                         Double.toString(minNpmi), Double.toString(relativeMinNpmi), Double.toString(thresholdNpmi))
                 .build();
 
@@ -99,7 +104,8 @@ public class Main {
         HadoopJarStepConfig step6 = HadoopJarStepConfig.builder()
                 .jar(String.format("s3://%s/%s/sort-npmi-1.0.jar", config.bucketName(), config.jarsPath()))
                 .args(String.format("s3n://assignment2-emr/output/filter-npmi/%s", dateSuffix),
-                        String.format("s3n://assignment2-emr/output/sort-npmi/%s", dateSuffix))
+                        String.format("s3n://assignment2-emr/output/sort-npmi/%s", dateSuffix),
+                        Long.toString(config.maxSplitSize()))
                 .build();
 
         StepConfig stepConfig6 = StepConfig.builder()
@@ -112,8 +118,8 @@ public class Main {
         HadoopJarStepConfig step7 = HadoopJarStepConfig.builder()
                 .jar(String.format("s3://%s/%s/top-n-1.0.jar", config.bucketName(), config.jarsPath()))
                 .args(String.format("s3n://assignment2-emr/output/sort-npmi/%s", dateSuffix),
-                        String.format("s3n://assignment2-emr/output/top-n-npmi/%s", dateSuffix)
-                        , Integer.toString(config.topNpmi()))
+                        String.format("s3n://assignment2-emr/output/top-n-npmi/%s", dateSuffix),
+                        Long.toString(config.maxSplitSize()), Integer.toString(config.topNpmi()))
                 .build();
 
         StepConfig stepConfig7 = StepConfig.builder()

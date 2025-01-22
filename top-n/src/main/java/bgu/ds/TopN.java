@@ -53,9 +53,11 @@ public class TopN {
         }
     }
 
-    public void start(Path input, Path output, int number) throws Exception{
+    public void start(Path input, Path output, long maxSplitSize, int number) throws Exception{
         System.out.println("[DEBUG] STEP 7 started!");
         Configuration conf = new Configuration();
+        if (maxSplitSize > 0)
+            conf.setLong("mapred.max.split.size", maxSplitSize);
         conf.setInt("top.number", number);
 
         Job job = Job.getInstance(conf, "Top N NPMI");

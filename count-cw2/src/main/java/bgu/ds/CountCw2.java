@@ -66,14 +66,18 @@ public class CountCw2 {
         }
     }
 
-    public void start(Path input, Path output) throws Exception{
+    public void start(Path input, Path output, boolean useCombiner, long maxSplitSize) throws Exception{
         System.out.println("[DEBUG] STEP 3 started!");
         Configuration conf = new Configuration();
+        if (maxSplitSize > 0)
+            conf.setLong("mapred.max.split.size", maxSplitSize);
+
         Job job = Job.getInstance(conf, "Count C(w2)");
         job.setJarByClass(CountCw2.class);
         job.setMapperClass(MapperClass.class);
         job.setPartitionerClass(PartitionerClass.class);
-        job.setCombinerClass(CombinerClass.class);
+        if (useCombiner)
+            job.setCombinerClass(CombinerClass.class);
         job.setReducerClass(ReducerClass.class);
         job.setMapOutputKeyClass(BigramKeyWritableComparable.class);
         job.setMapOutputValueClass(LongWritable.class);

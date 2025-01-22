@@ -59,9 +59,13 @@ public class CalculateNpmi {
         }
     }
 
-    public void start(List<Path> input, Path output) throws Exception{
+    public void start(List<Path> input, Path output, long maxSplitSize) throws Exception{
         System.out.println("[DEBUG] STEP 4 started!");
         Configuration conf = new Configuration();
+
+        if (maxSplitSize > 0)
+            conf.setLong("mapred.max.split.size", maxSplitSize);
+
         Job job = Job.getInstance(conf, "Calculate NPMI");
         job.setJarByClass(CalculateNpmi.class);
         job.setPartitionerClass(PartitionerClass.class);

@@ -13,8 +13,9 @@ public class Main {
         input.add(new Path(args[1]));
         input.add(new Path(args[2]));
         Path output = new Path(args[3]);
+        long maxSplitSize = Long.parseLong(args[4]);
         try {
-            wordCount.start(input, output);
+            wordCount.start(input, output, maxSplitSize);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

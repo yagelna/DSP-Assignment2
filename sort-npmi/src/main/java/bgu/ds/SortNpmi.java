@@ -44,9 +44,11 @@ public class SortNpmi {
         }
     }
 
-    public void start(Path input, Path output) throws Exception{
+    public void start(Path input, Path output, long maxSplitSize) throws Exception{
         System.out.println("[DEBUG] STEP 6 started!");
         Configuration conf = new Configuration();
+        if (maxSplitSize > 0)
+            conf.setLong("mapred.max.split.size", maxSplitSize);
 
         Job job = Job.getInstance(conf, "Sort NPMI");
         job.setJarByClass(SortNpmi.class);
