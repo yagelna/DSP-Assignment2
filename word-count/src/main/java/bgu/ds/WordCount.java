@@ -69,8 +69,8 @@ public class WordCount {
 //        job.setInputFormatClass(SequenceFileInputFormat.class);
 //        TextInputFormat.addInputPath(job, new Path("s3://datasets.elasticmapreduce/ngrams/books/20090715/eng-us-all/3gram/data"));
 
-        FileInputFormat.addInputPath(job, new Path("s3://assignment2-emr/arbix.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("s3://assignment2-emr/output_word_count"));
+        FileInputFormat.addInputPath(job, new Path("s3://assignment2-emr/input/arbix.txt"));
+        FileOutputFormat.setOutputPath(job, new Path("s3://assignment2-emr/output/output_word_count"));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
