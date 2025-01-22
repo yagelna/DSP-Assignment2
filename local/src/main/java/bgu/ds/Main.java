@@ -23,7 +23,7 @@ public class Main {
         double minNpmi = args.length > 0 ? Integer.parseInt(args[0]) : config.defaultMinNpmi();
         double relativeMinNpmi = args.length > 1 ? Integer.parseInt(args[1]) : config.defaultRelativeMinNpmi();
 
-        String dateSuffix = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String dateSuffix = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
 
         // Step 1
         HadoopJarStepConfig step1 = HadoopJarStepConfig.builder()
@@ -107,6 +107,21 @@ public class Main {
                 .actionOnFailure("TERMINATE_JOB_FLOW")
                 .build();
 
+        // Step 7
+        HadoopJarStepConfig step7 = HadoopJarStepConfig.builder()
+                .jar(String.format("s3://%s/%s/top-n-1.0.jar", config.bucketName(), config.jarsPath()))
+                .args(String.format("s3n://assignment2-emr/output/sort-npmi/%s", dateSuffix),
+                        String.format("s3n://assignment2-emr/output/top-n-npmi/%s", dateSuffix)
+                        , Integer.toString(config.topNpmi()))
+                .build();
+
+        StepConfig stepConfig7 = StepConfig.builder()
+                .name("Top N NPMI")
+                .hadoopJarStep(step7)
+                .actionOnFailure("TERMINATE_JOB_FLOW")
+                .build();
+
+
         //Job flow
         JobFlowInstancesConfig instances = JobFlowInstancesConfig.builder()
                 .instanceCount(config.numberOfInstances())
@@ -122,7 +137,7 @@ public class Main {
         RunJobFlowRequest runFlowRequest = RunJobFlowRequest.builder()
                 .name("Map reduce project")
                 .instances(instances)
-                .steps(stepConfig1, stepConfig2, stepConfig3, stepConfig4, stepConfig5, stepConfig6)
+                .steps(stepConfig1, stepConfig2, stepConfig3, stepConfig4, stepConfig5, stepConfig6, stepConfig7)
                 .logUri(String.format("s3://%s/%s/", config.bucketName(), config.logsPath()))
                 .serviceRole("EMR_DefaultRole")
                 .jobFlowRole("EMR_EC2_DefaultRole")

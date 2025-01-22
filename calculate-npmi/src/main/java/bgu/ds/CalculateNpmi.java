@@ -52,9 +52,9 @@ public class CalculateNpmi {
         }
     }
 
-    public static class PartitionerClass extends Partitioner<BigramKeyWritableComparable, LongWritable> {
+    public static class PartitionerClass extends Partitioner<BigramKeyWritableComparable, TaggedValue> {
         @Override
-        public int getPartition(BigramKeyWritableComparable key, LongWritable value, int numPartitions) {
+        public int getPartition(BigramKeyWritableComparable key, TaggedValue value, int numPartitions) {
             return key.getDecade() % numPartitions;
         }
     }

@@ -15,6 +15,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -80,7 +81,7 @@ public class CountNCw1w2 {
     public static class PartitionerClass extends Partitioner<BigramKeyWritableComparable, LongWritable> {
         @Override
         public int getPartition(BigramKeyWritableComparable key, LongWritable value, int numPartitions) {
-            return key.hashCode() % numPartitions;
+            return (key.hashCode() & Integer.MAX_VALUE) % numPartitions;
         }
     }
 
@@ -101,7 +102,7 @@ public class CountNCw1w2 {
         job.setMapOutputValueClass(LongWritable.class);
         job.setOutputKeyClass(BigramKeyWritableComparable.class);
         job.setOutputValueClass(TaggedValue.class);
-        //job.setInputFormatClass(SequenceFileInputFormat.class);
+        job.setInputFormatClass(SequenceFileInputFormat.class);
         job.setOutputFormatClass(SequenceFileOutputFormat.class);
 
         FileInputFormat.addInputPath(job, input);

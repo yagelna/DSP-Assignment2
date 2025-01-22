@@ -18,11 +18,12 @@
         <module>calculate-npmi</module>
         <module>filter-npmi</module>
         <module>sort-npmi</module>
+        <module>top-n</module>
     </modules>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

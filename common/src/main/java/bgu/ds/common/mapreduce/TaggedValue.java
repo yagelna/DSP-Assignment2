@@ -41,6 +41,6 @@ public class TaggedValue implements Writable {
     }
 
     public String toString() {
-        return tag + " " + value;
+        return tag + "\t" + value;
     }
 }

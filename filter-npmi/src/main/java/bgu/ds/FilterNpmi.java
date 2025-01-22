@@ -59,7 +59,7 @@ public class FilterNpmi {
                 }
             } else {
                 double npmi = values.iterator().next().get();
-                if (npmi >= minPmi || npmi >= relativeMinPmi * decadeNpmiSum) {
+                if (npmi < 1 && (npmi >= minPmi || npmi >= relativeMinPmi * decadeNpmiSum)) {
                     context.write(key, new DoubleWritable(npmi));
                 }
             }

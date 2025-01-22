@@ -1,12 +1,13 @@
 aws:
-  numberOfInstances: 1
-  instanceType: "m4.large"
+  numberOfInstances: 9
+  instanceType: "m7g.xlarge"
   bucketName: "assignment2-emr"
   jarsPath: "jars"
   logsPath: "logs"
-  inputCorpusPath: "s3n://assignment2-emr/input/googlebooks-heb-all-2gram-20090715-19.csv"
+  inputCorpusPath: "s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/2gram/data"
   stopWordsPath: "input/heb-stopwords.txt"
   defaultMinNpmi: 0.5
   defaultRelativeMinNpmi: 0.2
+  topNpmi: 10
 
 

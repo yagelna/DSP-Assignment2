@@ -1,4 +1,4 @@
-package bgu.ds;
+package bgu.ds.common.mapreduce;
 
 import org.apache.hadoop.io.WritableComparable;
 

@@ -18,6 +18,7 @@ sub_modules=(
     "calculate-npmi"
     "filter-npmi"
     "sort-npmi"
+    "top-n"
 )
 
 # Function to build Maven project in the current directory

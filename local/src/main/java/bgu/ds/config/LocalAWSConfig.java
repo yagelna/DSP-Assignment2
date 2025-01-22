@@ -10,4 +10,5 @@ public interface LocalAWSConfig {
     String stopWordsPath();
     double defaultMinNpmi();
     double defaultRelativeMinNpmi();
+    int topNpmi();
 }

@@ -1,6 +1,8 @@
 package bgu.ds;
 
 import bgu.ds.common.mapreduce.BigramKeyWritableComparable;
+import bgu.ds.common.mapreduce.DecadeNpmiWritableComparable;
+import bgu.ds.common.mapreduce.TaggedValue;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
@@ -22,7 +24,7 @@ public class SortNpmi {
 
         @Override
         public void map(BigramKeyWritableComparable key, DoubleWritable value, Context context) throws IOException,  InterruptedException {
-            context.write(new DecadeNpmiWritableComparable(key.getDecade(), value.get()), key);
+            context.write(new DecadeNpmiWritableComparable(key.getDecade(), value.get() * -1), key);
         }
     }
 
@@ -30,8 +32,15 @@ public class SortNpmi {
         @Override
         public void reduce(DecadeNpmiWritableComparable key, Iterable<BigramKeyWritableComparable> values, Context context) throws IOException,  InterruptedException {
             for (BigramKeyWritableComparable value : values) {
-                context.write(value, new DoubleWritable(key.getNpmi()));
+                context.write(value, new DoubleWritable(key.getNpmi() * -1));
             }
+        }
+    }
+
+    public static class PartitionerClass extends Partitioner<DecadeNpmiWritableComparable, BigramKeyWritableComparable> {
+        @Override
+        public int getPartition(DecadeNpmiWritableComparable key, BigramKeyWritableComparable value, int numPartitions) {
+            return key.getDecade() % numPartitions;
         }
     }
 
@@ -41,6 +50,7 @@ public class SortNpmi {
 
         Job job = Job.getInstance(conf, "Sort NPMI");
         job.setJarByClass(SortNpmi.class);
+        job.setPartitionerClass(PartitionerClass.class);
         job.setMapperClass(MapperClass.class);
         job.setReducerClass(ReducerClass.class);
         job.setMapOutputKeyClass(DecadeNpmiWritableComparable.class);
@@ -48,7 +58,7 @@ public class SortNpmi {
         job.setOutputKeyClass(BigramKeyWritableComparable.class);
         job.setOutputValueClass(DoubleWritable.class);
         job.setInputFormatClass(SequenceFileInputFormat.class);
-        job.setOutputFormatClass(TextOutputFormat.class);
+        job.setOutputFormatClass(SequenceFileOutputFormat.class);
 
         FileInputFormat.addInputPath(job, input);
         FileOutputFormat.setOutputPath(job, output);

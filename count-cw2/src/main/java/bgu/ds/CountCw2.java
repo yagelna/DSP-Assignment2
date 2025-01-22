@@ -44,15 +44,17 @@ public class CountCw2 {
     }
 
     public static class ReducerClass extends Reducer<BigramKeyWritableComparable, LongWritable, BigramKeyWritableComparable, TaggedValue> {
+        private long sumCw2 = 0;
+
         @Override
         public void reduce(BigramKeyWritableComparable key, Iterable<LongWritable> values, Context context) throws IOException,  InterruptedException {
-            long sum = 0;
             if (key.isUnigramCount()) {
+                sumCw2 = 0;
                 for (LongWritable value : values) {
-                    sum += value.get();
+                    sumCw2 += value.get();
                 }
             } else if (key.isBigramCount()){
-                context.write(new BigramKeyWritableComparable(key.getDecade(), key.getW2(), key.getW1()), new TaggedValue(TagEnum.W2_COUNT, sum));
+                context.write(new BigramKeyWritableComparable(key.getDecade(), key.getW2(), key.getW1()), new TaggedValue(TagEnum.W2_COUNT, sumCw2));
             }
         }
     }
@@ -60,7 +62,7 @@ public class CountCw2 {
     public static class PartitionerClass extends Partitioner<BigramKeyWritableComparable, LongWritable> {
         @Override
         public int getPartition(BigramKeyWritableComparable key, LongWritable value, int numPartitions) {
-            return (key.getDecade() + key.getW1().hashCode()) % numPartitions;
+            return ((key.getDecade() + key.getW1().hashCode()) & Integer.MAX_VALUE) % numPartitions;
         }
     }
 

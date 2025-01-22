@@ -44,15 +44,17 @@ public class CountCw1 {
     }
 
     public static class ReducerClass extends Reducer<BigramKeyWritableComparable, LongWritable, BigramKeyWritableComparable, TaggedValue> {
+        private long sumCw1 = 0;
+
         @Override
         public void reduce(BigramKeyWritableComparable key, Iterable<LongWritable> values, Context context) throws IOException,  InterruptedException {
-            long sum = 0;
             if (key.isUnigramCount()) {
+                sumCw1 = 0;
                 for (LongWritable value : values) {
-                    sum += value.get();
+                    sumCw1 += value.get();
                 }
             } else if (key.isBigramCount()){
-                context.write(key, new TaggedValue(TagEnum.W1_COUNT, sum));
+                context.write(key, new TaggedValue(TagEnum.W1_COUNT, sumCw1));
             }
         }
     }
@@ -60,7 +62,7 @@ public class CountCw1 {
     public static class PartitionerClass extends Partitioner<BigramKeyWritableComparable, LongWritable> {
         @Override
         public int getPartition(BigramKeyWritableComparable key, LongWritable value, int numPartitions) {
-            return (key.getDecade() + key.getW1().hashCode()) % numPartitions;
+            return ((key.getDecade() + key.getW1().hashCode())  & Integer.MAX_VALUE) % numPartitions;
         }
     }
 
@@ -78,7 +80,7 @@ public class CountCw1 {
         job.setOutputKeyClass(BigramKeyWritableComparable.class);
         job.setOutputValueClass(TaggedValue.class);
         job.setInputFormatClass(SequenceFileInputFormat.class);
-        job.setOutputFormatClass(TextOutputFormat.class);
+        job.setOutputFormatClass(SequenceFileOutputFormat.class);
 
         FileInputFormat.addInputPath(job, input);
         FileOutputFormat.setOutputPath(job, output);

@@ -91,6 +91,6 @@ public class BigramKeyWritableComparable implements WritableComparable<BigramKey
     }
 
     public String toString() {
-        return decade + "," + w1 + "," + w2;
+        return decade + "\t" + w1 + "\t" + w2;
     }
 }
