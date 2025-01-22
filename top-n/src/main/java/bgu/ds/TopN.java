@@ -39,9 +39,10 @@ public class TopN {
             for (BigramKeyWritableComparable value : values) {
                 if (count < context.getConfiguration().getInt("top.number", 10)) {
                     context.write(value, new DoubleWritable(key.getNpmi() * -1));
-                    decadesMap.put(key.getDecade(), count + 1);
+                    count++;
                 }
             }
+            decadesMap.put(key.getDecade(), count);
         }
     }
 
