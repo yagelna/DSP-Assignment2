@@ -6,6 +6,9 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.emr.EmrClient;
 import software.amazon.awssdk.services.emr.model.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Main {
     private static final Region region = Region.US_EAST_1;
     public static EmrClient emr = EmrClient.builder().region(region).build();
@@ -14,18 +17,93 @@ public class Main {
 
     public static void main(String[]args){
         System.out.println("[INFO] Connecting to aws");
-        System.out.println( "list cluster");
-        System.out.println( emr.listClusters());
+        System.out.println("list cluster");
+        System.out.println(emr.listClusters());
+
+        double minNpmi = args.length > 0 ? Integer.parseInt(args[0]) : config.defaultMinNpmi();
+        double relativeMinNpmi = args.length > 1 ? Integer.parseInt(args[1]) : config.defaultRelativeMinNpmi();
+
+        String dateSuffix = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
         // Step 1
         HadoopJarStepConfig step1 = HadoopJarStepConfig.builder()
-                .jar(String.format("s3://%s/%s/word-count-1.0.jar", config.bucketName(), config.jarsPath()))
-                .mainClass("Step1")
+                .jar(String.format("s3://%s/%s/count-N-cw1w2-1.0.jar", config.bucketName(), config.jarsPath()))
+                .args(config.inputCorpusPath(),
+                        String.format("s3n://assignment2-emr/output/count-N-cw1w2/%s", dateSuffix),
+                        "assignment2-emr", config.stopWordsPath())
                 .build();
 
         StepConfig stepConfig1 = StepConfig.builder()
-                .name("Step1")
+                .name("Count N and C(w1, w2)")
                 .hadoopJarStep(step1)
+                .actionOnFailure("TERMINATE_JOB_FLOW")
+                .build();
+
+        // Step 2
+        HadoopJarStepConfig step2 = HadoopJarStepConfig.builder()
+                .jar(String.format("s3://%s/%s/count-cw1-1.0.jar", config.bucketName(), config.jarsPath()))
+                .args(String.format("s3n://assignment2-emr/output/count-N-cw1w2/%s", dateSuffix),
+                        String.format("s3n://assignment2-emr/output/count-cw1/%s", dateSuffix))
+                .build();
+
+        StepConfig stepConfig2 = StepConfig.builder()
+                .name("Count C(w1)")
+                .hadoopJarStep(step2)
+                .actionOnFailure("TERMINATE_JOB_FLOW")
+                .build();
+
+        // Step 3
+        HadoopJarStepConfig step3 = HadoopJarStepConfig.builder()
+                .jar(String.format("s3://%s/%s/count-cw2-1.0.jar", config.bucketName(), config.jarsPath()))
+                .args(String.format("s3n://assignment2-emr/output/count-N-cw1w2/%s", dateSuffix),
+                        String.format("s3n://assignment2-emr/output/count-cw2/%s", dateSuffix))
+                .build();
+
+        StepConfig stepConfig3 = StepConfig.builder()
+                .name("Count C(w2)")
+                .hadoopJarStep(step3)
+                .actionOnFailure("TERMINATE_JOB_FLOW")
+                .build();
+
+        // Step 4
+        HadoopJarStepConfig step4 = HadoopJarStepConfig.builder()
+                .jar(String.format("s3://%s/%s/calculate-npmi-1.0.jar", config.bucketName(), config.jarsPath()))
+                .args(String.format("s3n://assignment2-emr/output/count-N-cw1w2/%s", dateSuffix),
+                        String.format("s3n://assignment2-emr/output/count-cw1/%s", dateSuffix),
+                        String.format("s3n://assignment2-emr/output/count-cw2/%s", dateSuffix),
+                        String.format("s3n://assignment2-emr/output/calculate-npmi/%s", dateSuffix))
+                .build();
+
+        StepConfig stepConfig4 = StepConfig.builder()
+                .name("Calculate NPMI")
+                .hadoopJarStep(step4)
+                .actionOnFailure("TERMINATE_JOB_FLOW")
+                .build();
+
+        // Step 5
+        HadoopJarStepConfig step5 = HadoopJarStepConfig.builder()
+                .jar(String.format("s3://%s/%s/filter-npmi-1.0.jar", config.bucketName(), config.jarsPath()))
+                .args(String.format("s3n://assignment2-emr/output/calculate-npmi/%s", dateSuffix),
+                        String.format("s3n://assignment2-emr/output/filter-npmi/%s", dateSuffix),
+                        Double.toString(minNpmi), Double.toString(relativeMinNpmi))
+                .build();
+
+        StepConfig stepConfig5 = StepConfig.builder()
+                .name("Filter NPMI")
+                .hadoopJarStep(step5)
+                .actionOnFailure("TERMINATE_JOB_FLOW")
+                .build();
+
+        // Step 6
+        HadoopJarStepConfig step6 = HadoopJarStepConfig.builder()
+                .jar(String.format("s3://%s/%s/sort-npmi-1.0.jar", config.bucketName(), config.jarsPath()))
+                .args(String.format("s3n://assignment2-emr/output/filter-npmi/%s", dateSuffix),
+                        String.format("s3n://assignment2-emr/output/sort-npmi/%s", dateSuffix))
+                .build();
+
+        StepConfig stepConfig6 = StepConfig.builder()
+                .name("Sort NPMI")
+                .hadoopJarStep(step6)
                 .actionOnFailure("TERMINATE_JOB_FLOW")
                 .build();
 
@@ -44,7 +122,7 @@ public class Main {
         RunJobFlowRequest runFlowRequest = RunJobFlowRequest.builder()
                 .name("Map reduce project")
                 .instances(instances)
-                .steps(stepConfig1)
+                .steps(stepConfig1, stepConfig2, stepConfig3, stepConfig4, stepConfig5, stepConfig6)
                 .logUri(String.format("s3://%s/%s/", config.bucketName(), config.logsPath()))
                 .serviceRole("EMR_DefaultRole")
                 .jobFlowRole("EMR_EC2_DefaultRole")

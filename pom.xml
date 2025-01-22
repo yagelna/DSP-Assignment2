@@ -11,6 +11,13 @@
     <modules>
         <module>local</module>
         <module>word-count</module>
+        <module>count-N-cw1w2</module>
+        <module>count-cw1</module>
+        <module>common</module>
+        <module>count-cw2</module>
+        <module>calculate-npmi</module>
+        <module>filter-npmi</module>
+        <module>sort-npmi</module>
     </modules>
 
     <properties>

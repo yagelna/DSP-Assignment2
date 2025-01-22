@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>word-count</artifactId>
+    <artifactId>calculate-npmi</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -40,5 +40,4 @@
             <version>2.6.0</version>
         </dependency>
     </dependencies>
-
 </project>

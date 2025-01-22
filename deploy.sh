@@ -12,13 +12,18 @@ directories=(
 )
 
 sub_modules=(
-    "word-count"
+    "count-N-cw1w2"
+    "count-cw1"
+    "count-cw2"
+    "calculate-npmi"
+    "filter-npmi"
+    "sort-npmi"
 )
 
 # Function to build Maven project in the current directory
 build_maven() {
     echo "Building Maven project in directory: $(pwd)"
-    mvn clean package
+    mvn clean install
 }
 
 # Function to create S3 bucket if it doesn't exist
@@ -64,7 +69,12 @@ for directory in "${directories[@]}"; do
 done
 
 # Build Maven project
-build_maven
+if ! build_maven; then
+    echo "Failed to build project, Aborting."
+    exit 1
+else
+    echo "Project built successfully."
+fi
 
 # Upload JAR files to S3 bucket
 for module in "${sub_modules[@]}"; do

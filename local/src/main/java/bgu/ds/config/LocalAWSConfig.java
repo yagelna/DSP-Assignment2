@@ -6,4 +6,8 @@ public interface LocalAWSConfig {
     String bucketName();
     String jarsPath();
     String logsPath();
+    String inputCorpusPath();
+    String stopWordsPath();
+    double defaultMinNpmi();
+    double defaultRelativeMinNpmi();
 }

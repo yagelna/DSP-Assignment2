@@ -4,4 +4,9 @@ aws:
   bucketName: "assignment2-emr"
   jarsPath: "jars"
   logsPath: "logs"
+  inputCorpusPath: "s3n://assignment2-emr/input/googlebooks-heb-all-2gram-20090715-19.csv"
+  stopWordsPath: "input/heb-stopwords.txt"
+  defaultMinNpmi: 0.5
+  defaultRelativeMinNpmi: 0.2
+
 
