@@ -1,5 +1,5 @@
-## Sarcasm Detection System using AWS - Distributed System Programming Assignment 2
-A distributed system designed to analyze Amazon reviews, perform sentiment analysis, and detect sarcasm. The system utilizes AWS services such as S3, EC2, and SQS to process reviews at scale. Features include worker and manager instances to distribute tasks, HTML visualization of results, and integration of sentiment and named entity recognition using Stanford CoreNLP. The project focuses on scalability, fault tolerance, and efficient resource utilization.
+## Collocation Extraction Project using AWS - Distributed System Programming - Assignment 2
+This project implements a scalable MapReduce job using Amazon Elastic MapReduce (EMR) to extract collocations from the Google Ngrams dataset. The solution processes large-scale data stored on S3, ensuring efficient resource management and scalability. Key features include custom filtering logic, handling stopwords, and generating collocation rankings for different decades based on data analysis.
 
 ---
 
